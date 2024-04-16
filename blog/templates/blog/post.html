@@ -1,0 +1,64 @@
+{%extends 'base.html'%} {% block title %} post {% endblock %} {% block content%}
+<div class="container w-100 m-2"  style="margin: 20px auto !important;">
+  <div class="row">
+    <div class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <img src="/media/{{post.image}}" class="col-12 py-2" alt="..." />
+
+            </div>
+            <div class="col-8">
+                <div>{{post.createdat}}</div>
+                <div class="h1 text-danger">{{post.title}}</div>
+                <div style="word-break: break-all;white-space: normal;">{{post.content}}</div>
+            </div>
+
+        </div>
+    </div>
+
+
+      <div class="px-5">
+        <div class="card">
+          <div class="col-12 d-flex justify-content-between">
+            <div class="h4">
+              {{post.commentpost.count}}
+              <a href="{{post.get_addcomment_url  }}">
+                Add comment
+              </a>
+            </div>
+          </div>
+          {%for comment in comments%}
+          <div class="px-5 py-2">
+            <div class="card col-12">
+              <div class="card-body">
+                <h5 class="card-title">{{comment.content}}</h5>
+                <div class="d-flex justify-content-between">
+                  <span class="card-title">{{comment.user}}</span>
+                  <a href="{{comment.get_addreply_url}}">Reply</a>
+                  <span class="card-title">{{comment.createdat}}</span>
+                </div>
+
+                {%for reply in comment.replycomment.all%}
+                <div class="px-5 py-2">
+                  <div class="card col-12">
+                    <div class="card-body">
+                      <h5 class="card-title">{{reply.content}}</h5>
+                      <div class="d-flex justify-content-between">
+                        <span class="card-title">{{reply.user}}</span>
+                        <span class="card-title">{{reply.createdat}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {%endfor%}
+              </div>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
